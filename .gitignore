@@ -1,8 +1,7 @@
 ### Vagrant ####
-
 /vagrant/provision/.vagrant
 
-HELP.md
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

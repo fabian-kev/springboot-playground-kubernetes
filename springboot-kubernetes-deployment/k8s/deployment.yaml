@@ -40,3 +40,22 @@ spec:
               port: 8080
             initialDelaySeconds: 30
             periodSeconds: 10
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: "file:/app/config/"  # Tell Spring Boot to look here
+            - name: SPRING_DATASOURCE_PASSWORD  # Environment variable name for your app
+              valueFrom:
+                secretKeyRef:
+                  name: spring-boot-secret  # Name of the Secret
+                  key: SPRING_DATASOURCE_PASSWORD       # Key from the Secret
+          volumeMounts:
+            - name: config-volume
+              mountPath: "/app/config"
+              readOnly: true
+      volumes:
+        - name: config-volume
+          configMap:
+            name: spring-boot-config
+            items:
+              - key: application.properties
+                path: application.properties
