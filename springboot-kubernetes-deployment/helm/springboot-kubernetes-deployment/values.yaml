@@ -1,0 +1,42 @@
+replicaCount: 2
+
+image:
+  repository: fbiankevin/springboot-kubernetes-deployment
+  tag: "0.0.2"
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "200m"  # 0.2 CPU cores
+  limits:
+    memory: "512Mi"
+    cpu: "500m"  # 0.5 CPU cores
+
+
+probes:
+  readiness:
+    path: /actuator/health
+    initialDelaySeconds: 10
+    periodSeconds: 5
+  liveness:
+    path: /actuator/health
+    initialDelaySeconds: 30
+    periodSeconds: 10
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 8080
+
+config:
+  springProfile: "prod"
+  logLevel: "INFO"
+  applicationProperties: |
+    spring.profiles.active=prod
+    logging.level.org.springframework=INFO
+    server.port=8080
+    app.user.name=Icycle
+
+secret:
+  springDataSourcePassword: "mysecretpassword"
