@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-kubernetes-deployment
+  labels:
+    app: spring-boot
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: spring-boot
+  template:
+    metadata:
+      labels:
+        app: spring-boot
+    spec:
+      containers:
+        - name: spring-boot
+          image: fbiankevin/springboot-kubernetes-deployment:0.0.1  # Replace with your image
+          imagePullPolicy: IfNotPresent  # Use local image if available, else pull
+          ports:
+            - containerPort: 8080
+              name: http
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"  # 0.2 CPU cores
+            limits:
+              memory: "512Mi"
+              cpu: "500m"  # 0.5 CPU cores
+          readinessProbe:
+            httpGet:
+              path: /actuator/health  # Spring Boot Actuator health endpoint
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
