@@ -18,7 +18,7 @@ This project shows how to deploy a Spring Boot app in Kubernetes. It includes cr
    docker build -t springboot-kubernetes-deployment:0.0.2 .
    ```
 
-2. **(Optional) Push to a Registry**  
+2. **Push to a Registry**  
    Tag and upload it to Docker Hub (replace `fbiankevin` with your username):
 
    ```bash
