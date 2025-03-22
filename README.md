@@ -1,4 +1,4 @@
-# Kubernetes with Vagrant
+# Deploy Spring Boot App to Kubernetes with Vagrant
 
 This project sets up a Kubernetes cluster using Vagrant. It provisions a master node (`kmaster`) and worker nodes (`kworker1`, `kworker2`, etc.) with bash scripts. This README is the main guide for the project and its child modules.
 

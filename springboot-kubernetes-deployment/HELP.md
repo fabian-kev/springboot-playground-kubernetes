@@ -41,7 +41,7 @@ kubectl logs spring-boot-app-abcde-12345
 kubectl exec -it spring-boot-app-abcde-12345 -- bash
 
 #Scaling
-kubectl scale deployment springboot-kubernetes-deployment --replicas=3
+kubectl scale app-spring-boot --replicas=3
 kubectl get deployments
 
 #Cleanup
@@ -50,7 +50,7 @@ kubectl delete -f service.yaml
 kubectl delete -f config-map.yaml
 
 #Accessing the App
-kubectl port-forward service/springboot-kubernetes-deployment-service 8080:80
+kubectl port-forward service/app-spring-boot-service 8080:80
 ```
 
 # ConfigMap
@@ -58,15 +58,15 @@ kubectl port-forward service/springboot-kubernetes-deployment-service 8080:80
 
 
 #Validate the application.properties file inside a pod
-kubectl exec -it springboot-kubernetes-deployment-587d54b459-mxdmm -- env | grep SPRING_CONFIG_LOCATION
+kubectl exec -it app-spring-boot-587d54b459-mxdmm -- env | grep SPRING_CONFIG_LOCATION
 kubectl exec -it app-spring-boot-5fbfdfd6-bbmt6 -- cat /app/config/application.properties
-kubectl exec -it springboot-kubernetes-deployment-b6d67cc76-sdb89 -- ls /app/config
+kubectl exec -it app-spring-boot-b6d67cc76-sdb89 -- ls /app/config
 
-kubectl exec -it springboot-kubernetes-deployment-d565ccc8c-5dn8k -- echo $SPRING_DATASOURCE_PASSWORD
+kubectl exec -itapp-spring-boot-d565ccc8c-5dn8k -- echo $SPRING_DATASOURCE_PASSWORD
 
 
 #Apply the change from configmap if there is no changes in deploymeny.yaml
-kubectl rollout restart deployment springboot-kubernetes-deployment
+kubectl rollout restart deployment app-spring-boot
 ```
 
 # Secret
@@ -82,13 +82,13 @@ kubectl get secret spring-boot-secret
 kubectl get secret spring-boot-secret -o jsonpath='{.data.SPRING_DATASOURCE_PASSWORD}' | base64 --decode
 
 #Verify in Pod:
-kubectl exec -it springboot-kubernetes-deployment-5f59c9f564-4qr7w -- env | grep DB_PASSWORD
+kubectl exec -itapp-spring-boot-5f59c9f564-4qr7w -- env | grep DB_PASSWORD
 ```
 
 # Helm
 ```bash
 #Generate a Helm chart scaffold:
-helm create springboot-kubernetes-deployment
+helm createapp-spring-boot
 
 #Dry run
 helm install app . --dry-run --debug

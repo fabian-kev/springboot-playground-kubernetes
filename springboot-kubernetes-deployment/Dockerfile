@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the Spring Boot JAR (assuming it’s built with Maven/Gradle)
-COPY target/springboot-kubernetes-deployment-0.0.1-SNAPSHOT.jar app.jar
+COPY target/app-spring-boot-0.0.2-SNAPSHOT.jar app.jar
 
 # Expose port 8080
 EXPOSE 8080

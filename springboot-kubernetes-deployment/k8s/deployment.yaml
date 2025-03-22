@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: springboot-kubernetes-deployment
+  name: app-spring-boot
   labels:
     app: spring-boot
 spec:
@@ -46,7 +46,7 @@ spec:
             - name: SPRING_DATASOURCE_PASSWORD  # Environment variable name for your app
               valueFrom:
                 secretKeyRef:
-                  name: spring-boot-secret  # Name of the Secret
+                  name: app-spring-boot-secret  # Name of the Secret
                   key: SPRING_DATASOURCE_PASSWORD       # Key from the Secret
           volumeMounts:
             - name: config-volume
@@ -55,7 +55,7 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: spring-boot-config
+            name: app-spring-boot-config
             items:
               - key: application.properties
                 path: application.properties
