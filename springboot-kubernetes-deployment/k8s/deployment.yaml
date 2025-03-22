@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: spring-boot
-          image: fbiankevin/springboot-kubernetes-deployment:0.0.1  # Replace with your image
+          image: fbiankevin/springboot-kubernetes-deployment:0.0.2  # Replace with your image
           imagePullPolicy: IfNotPresent  # Use local image if available, else pull
           ports:
             - containerPort: 8080

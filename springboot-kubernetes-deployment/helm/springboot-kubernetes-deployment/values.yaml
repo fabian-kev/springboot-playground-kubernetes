@@ -5,38 +5,35 @@ image:
   tag: "0.0.2"
   pullPolicy: IfNotPresent
 
-resources:
-  requests:
-    memory: "256Mi"
-    cpu: "200m"  # 0.2 CPU cores
-  limits:
-    memory: "512Mi"
-    cpu: "500m"  # 0.5 CPU cores
-
-
-probes:
-  readiness:
-    path: /actuator/health
-    initialDelaySeconds: 10
-    periodSeconds: 5
-  liveness:
-    path: /actuator/health
-    initialDelaySeconds: 30
-    periodSeconds: 10
-
 service:
   type: NodePort
-  port: 80
   targetPort: 8080
+  nodePort: 30080
 
 config:
-  springProfile: "prod"
-  logLevel: "INFO"
   applicationProperties: |
-    spring.profiles.active=prod
-    logging.level.org.springframework=INFO
+    spring.profiles.active=dev
     server.port=8080
-    app.user.name=Icycle
+    logging.level.com.fabiankevin=error
+    app.user.name=Sandro
 
 secret:
   springDataSourcePassword: "mysecretpassword"
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "200m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+probes:
+  readiness:
+    path: "/actuator/health"
+    initialDelaySeconds: 10
+    periodSeconds: 10
+  liveness:
+    path: "/actuator/health"
+    initialDelaySeconds: 15
+    periodSeconds: 20

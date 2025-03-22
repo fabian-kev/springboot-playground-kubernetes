@@ -7,3 +7,4 @@ data:
     spring.profiles.active=dev
     server.port=8080
     logging.level.com.fabiankevin=error
+    app.user.name=Icy
